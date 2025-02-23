@@ -3,6 +3,7 @@
 #include <glad/gl.h>
 #include <GLFW/glfw3.h>
 
+#include "classes/Camera.h"
 #include "classes/Shader.h"
 
 int main (int argc, char *argv[]) {
@@ -13,7 +14,9 @@ int main (int argc, char *argv[]) {
 			return -1;
 	}
 
-	GLFWwindow* window = glfwCreateWindow(1280, 720, "TEMPLATE !float", NULL, NULL);
+	int screenWidth = 1280, screenHeight = 720;
+
+	GLFWwindow* window = glfwCreateWindow(screenWidth, screenHeight, "TEMPLATE !float", NULL, NULL);
 	if (!window)
 	{
 		glfwTerminate();
@@ -66,18 +69,22 @@ int main (int argc, char *argv[]) {
 	Shader shader("./src/shaders/shader.vert", "./src/shaders/shader.frag");
 	shader.Bind();
 
+	// Camera
+	Camera camera(screenWidth, screenWidth, { 0.0f, 0.0f, 2.0f} );
+
 	/* Loop until the user closes the window */
 	while (!glfwWindowShouldClose(window))
-	{
-		/* Render here */
+	{	
+		// Render here
 		glClear(GL_COLOR_BUFFER_BIT);
+		camera.Matrix(shader, "Matrix");
 	
 		glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, 0);
 
-		/* Swap front and back buffers */
+		// Swap front and back buffers
 		glfwSwapBuffers(window);
 
-		/* Poll for and process events */
+		// Poll for and process events
 		glfwPollEvents();
 	}
 
