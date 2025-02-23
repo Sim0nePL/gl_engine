@@ -25,6 +25,10 @@ Shader::Shader(const std::string& vsFile, const std::string& fsFile) {
 
 	glDeleteShader(vertexShader);
 	glDeleteShader(fragmentShader);
+
+	std::cout << "DEBUG: Shader " << id << " -> " << "Created from resources:" << std::endl;
+	std::cout << "  - " << vsFile << std::endl;
+	std::cout << "  - " << fsFile << std::endl;
 }
 
 int Shader::CreateShader(unsigned int type, const std::string& source, unsigned int& shaderId) {
@@ -64,14 +68,17 @@ std::string Shader::ReadShader(const std::string& filepath) {
 }
 
 void Shader::Bind() {
+	std::cout << "DEBUG: Shader " << id << " -> " << "Bind" << std::endl;
 	glUseProgram(id);
 }
 
 void Shader::Unbind() {
+	std::cout << "DEBUG: Shader " << id << " -> " << "Unbind" << std::endl;
 	glUseProgram(0);
 }
 
 void Shader::Delete() {
+	std::cout << "DEBUG: Shader " << id << " -> " << "Delete" << std::endl;
 	glDeleteProgram(id);
 }
 
