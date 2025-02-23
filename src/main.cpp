@@ -37,13 +37,15 @@ int main (int argc, char *argv[]) {
 	// Game Initialization
 	//  Object
 	float vertices[] {
-		-0.5f, -0.5f,  0.0f,
-		 0.5f, -0.5f,  0.0f,
-		 0.0f,  0.5f,  0.0f,
+		-0.5f, -0.5f,  0.0f, // Left Bottom
+		 0.5f, -0.5f,  0.0f, // Right Bottom
+		 0.5f,  0.5f,  0.0f, // Right Top
+		-0.5f,  0.5f,  0.0f, // Left Top
 	};
 
 	unsigned int indices[] {
 		0, 1, 2,
+		2, 3, 0
 	};
 
 	// Buffers
@@ -74,12 +76,14 @@ int main (int argc, char *argv[]) {
 
 	/* Loop until the user closes the window */
 	while (!glfwWindowShouldClose(window))
-	{	
+	{
+		camera.Inputs(window);
+
 		// Render here
 		glClear(GL_COLOR_BUFFER_BIT);
 		camera.Matrix(shader, "Matrix");
 	
-		glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, 0);
+		glDrawElements(GL_TRIANGLES, 2 * 3, GL_UNSIGNED_INT, 0);
 
 		// Swap front and back buffers
 		glfwSwapBuffers(window);

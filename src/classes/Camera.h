@@ -1,9 +1,13 @@
 #pragma once
 
+#define GLM_ENABLE_EXPERIMENTAL
+
 #include "glad/gl.h"
+#include <GLFW/glfw3.h>
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 #include "glm/gtc/type_ptr.hpp"
+#include "glm/gtx/rotate_vector.hpp"
 
 #include "Shader.h"
 
@@ -13,6 +17,7 @@ public:
 	~Camera();
 
 	void Matrix(Shader& shader, const char* uniform);
+	void Inputs(GLFWwindow* window);
 
 	// Display Settings
 	int width;

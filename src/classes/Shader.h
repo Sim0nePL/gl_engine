@@ -14,6 +14,7 @@ public:
 	// Create shader and put id into shaderId
 	// Returns compilation status and prints glsl error
 	int CreateShader(unsigned int type, const std::string& source, unsigned int& shaderId);
+
 	std::string ReadShader(const std::string& filepath);
 	void Bind();
 	void Unbind();
