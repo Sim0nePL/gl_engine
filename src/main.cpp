@@ -1,10 +1,11 @@
 #include <iostream>
+
 #include <glad/gl.h>
 #include <GLFW/glfw3.h>
 
 int main (int argc, char *argv[]) {
 	std::cout << "OpenGL Template !float" << std::endl;
-	
+
 /* Initialize the library */
 	if (!glfwInit()) {
 			return -1;
@@ -28,11 +29,44 @@ int main (int argc, char *argv[]) {
 	// Successfully loaded OpenGL
 	printf("Loaded OpenGL %d.%d\n", GLAD_VERSION_MAJOR(version), GLAD_VERSION_MINOR(version));
 
+	// Game Initialization
+	//  Object
+	float vertices[] {
+		-0.5f, -0.5f,  0.0f,
+		 0.5f, -0.5f,  0.0f,
+		 0.0f,  0.5f,  0.0f,
+	};
+
+	unsigned int indices[] {
+		0, 1, 2,
+	};
+
+	// Buffers
+	unsigned int VAO;
+	glGenVertexArrays(1, &VAO);
+	glBindVertexArray(VAO);
+
+	unsigned int VBO, EBO;
+	// - VBO
+	glGenBuffers(1, &VBO);
+	glBindBuffer(GL_ARRAY_BUFFER, VBO);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+
+	glVertexAttribPointer(0, 3, GL_FLOAT, false, 3 * sizeof(float), 0); // VAO attributes pointer
+	glEnableVertexAttribArray(0);
+
+	// - EBO
+	glGenBuffers(1, &EBO);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+
 	/* Loop until the user closes the window */
 	while (!glfwWindowShouldClose(window))
 	{
 		/* Render here */
 		glClear(GL_COLOR_BUFFER_BIT);
+	
+		glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, 0);
 
 		/* Swap front and back buffers */
 		glfwSwapBuffers(window);
