@@ -3,6 +3,8 @@
 #include <glad/gl.h>
 #include <GLFW/glfw3.h>
 
+#include "classes/Shader.h"
+
 int main (int argc, char *argv[]) {
 	std::cout << "OpenGL Template !float" << std::endl;
 
@@ -60,6 +62,10 @@ int main (int argc, char *argv[]) {
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
+	// Shader
+	Shader shader("./src/shaders/shader.vert", "./src/shaders/shader.frag");
+	shader.Bind();
+
 	/* Loop until the user closes the window */
 	while (!glfwWindowShouldClose(window))
 	{
@@ -74,6 +80,9 @@ int main (int argc, char *argv[]) {
 		/* Poll for and process events */
 		glfwPollEvents();
 	}
+
+	shader.Unbind();
+	shader.Delete();
 
 	glfwTerminate();
 
