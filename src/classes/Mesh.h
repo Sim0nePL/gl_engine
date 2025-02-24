@@ -6,7 +6,7 @@
 
 class Mesh {
 public:
-	Mesh(Vertex* vertices, unsigned long verticesSize, unsigned int* indices, unsigned long indicesSize);
+	Mesh(Vertex* vertices, unsigned long verticesSize, unsigned int* indices, unsigned long indicesSize, unsigned int count);
 	~Mesh();
 	void Bind();
 	void Unbind();
@@ -15,5 +15,7 @@ public:
 	VBO vbo;
 	VAO vao;
 	EBO ebo;
+
+	unsigned int count;
 };
 

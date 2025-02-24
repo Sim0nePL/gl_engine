@@ -5,21 +5,25 @@
 #include <GLFW/glfw3.h>
 
 #include "classes/Camera.h"
+#include "classes/Renderer.h"
 #include "classes/Shader.h"
 #include "classes/Vertex.h"
 #include "classes/Mesh.h"
 
-// ---------------------------------------------------------
+// -------------------------------------------------------------------
 //
 //		TODO: 
+//			- Tweak Mesh Class to use arrays instead of shitload
+//					useless vars [ vertices, verticesSize, count ]. wtf
+//																						it's 4 am...
+//			- Add Translation Matrix to mesh and position property
 //			- Abstract Window Class so delete 
 //					functions could be in deconstructors
 //					after that glfwTerminate() will be called.
-//			- Renderer.
 //			- Some prefabs class based on Mesh.
 //
 //
-// ---------------------------------------------------------
+// ------------------------------------------------------------
 
 int main (int argc, char *argv[]) {
 	std::cout << "OpenGL Template !float" << std::endl;
@@ -65,8 +69,7 @@ int main (int argc, char *argv[]) {
 	};
 
 	// Buffers
-	Mesh plane(vertices, sizeof(vertices), indices, sizeof(indices));
-	plane.Bind();
+	Mesh plane(vertices, sizeof(vertices), indices, sizeof(indices), sizeof(indices) / sizeof(unsigned int));
 
 	// Shader
 	Shader shader("./src/shaders/shader.vert", "./src/shaders/shader.frag");
@@ -100,7 +103,7 @@ int main (int argc, char *argv[]) {
 		glClear(GL_COLOR_BUFFER_BIT);
 		camera.Matrix(shader, "Matrix");
 	
-		glDrawElements(GL_TRIANGLES, 2 * 3, GL_UNSIGNED_INT, 0);
+		Renderer::Render(plane);
 
 		// Swap front and back buffers
 		glfwSwapBuffers(window);

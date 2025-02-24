@@ -1,7 +1,8 @@
 #include "Mesh.h"
 #include "Buffers.h"
 
-Mesh::Mesh(Vertex* vertices, unsigned long verticesSize, unsigned int* indices, unsigned long indicesSize) {
+Mesh::Mesh(Vertex* vertices, unsigned long verticesSize, unsigned int* indices, unsigned long indicesSize, unsigned int count) :
+	count(count) {
 
 	vbo.Bind();
 	glBufferData(GL_ARRAY_BUFFER, verticesSize, vertices, GL_STATIC_DRAW);
