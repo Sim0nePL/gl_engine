@@ -6,6 +6,10 @@
 #include "classes/Camera.h"
 #include "classes/Shader.h"
 
+#include "classes/Buffers/VAO.h"
+#include "classes/Buffers/VBO.h"
+#include "classes/Buffers/EBO.h"
+
 int main (int argc, char *argv[]) {
 	std::cout << "OpenGL Template !float" << std::endl;
 
@@ -49,23 +53,19 @@ int main (int argc, char *argv[]) {
 	};
 
 	// Buffers
-	unsigned int VAO;
-	glGenVertexArrays(1, &VAO);
-	glBindVertexArray(VAO);
-
-	unsigned int VBO, EBO;
-	// - VBO
-	glGenBuffers(1, &VBO);
-	glBindBuffer(GL_ARRAY_BUFFER, VBO);
+	VBO vbo;
+	vbo.Bind();
 	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
-	glVertexAttribPointer(0, 3, GL_FLOAT, false, 3 * sizeof(float), 0); // VAO attributes pointer
+	VAO vao;
+	vao.Bind();
+	glVertexAttribPointer(0, 3, GL_FLOAT, false, 3 * sizeof(float), 0);
 	glEnableVertexAttribArray(0);
 
-	// - EBO
-	glGenBuffers(1, &EBO);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+	EBO ebo;
+	ebo.Bind();
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+
 
 	// Shader
 	Shader shader("./src/shaders/shader.vert", "./src/shaders/shader.frag");
@@ -94,6 +94,15 @@ int main (int argc, char *argv[]) {
 
 	shader.Unbind();
 	shader.Delete();
+	
+	ebo.Unbind();
+	ebo.Delete();
+
+	vbo.Unbind();
+	vbo.Delete();
+
+	vao.Unbind();
+	vao.Delete();
 
 	glfwTerminate();
 
