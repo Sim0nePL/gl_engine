@@ -1,3 +1,4 @@
+#include <cstddef>
 #include <iostream>
 
 #include <glad/gl.h>
@@ -6,6 +7,7 @@
 #include "classes/Camera.h"
 #include "classes/Shader.h"
 #include "classes/Buffers.h"
+#include "classes/Vertex.h"
 
 int main (int argc, char *argv[]) {
 	std::cout << "OpenGL Template !float" << std::endl;
@@ -37,11 +39,12 @@ int main (int argc, char *argv[]) {
 
 	// Game Initialization
 	//  Object
-	float vertices[] {
-		-0.5f, -0.5f,  0.0f, // Left Bottom
-		 0.5f, -0.5f,  0.0f, // Right Bottom
-		 0.5f,  0.5f,  0.0f, // Right Top
-		-0.5f,  0.5f,  0.0f, // Left Top
+	Vertex vertices[] {
+		//	Position												Color
+		{ -0.5, -0.5,  0.0f, 				1.0f, 0.0f, 0.0f, 1.0f, }, // Bottom Left
+		{  0.5, -0.5,  0.0f, 				0.0f, 1.0f, 0.0f, 1.0f, }, // Bottom Right
+		{  0.5,  0.5,  0.0f, 				0.0f, 0.0f, 1.0f, 1.0f, }, // Top Right
+		{ -0.5,  0.5,  0.0f, 				1.0f, 1.0f, 1.0f, 1.0f, }, // Top Left
 	};
 
 	unsigned int indices[] {
@@ -56,8 +59,11 @@ int main (int argc, char *argv[]) {
 
 	VAO vao;
 	vao.Bind();
-	glVertexAttribPointer(0, 3, GL_FLOAT, false, 3 * sizeof(float), 0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, false, sizeof(Vertex), 0); // Positions
 	glEnableVertexAttribArray(0);
+
+	glVertexAttribPointer(1, 4, GL_FLOAT, false, sizeof(Vertex), (void*) offsetof(Vertex, color)); // Color
+	glEnableVertexAttribArray(1);
 
 	EBO ebo;
 	ebo.Bind();
