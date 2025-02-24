@@ -35,7 +35,7 @@ void Camera::Inputs(GLFWwindow* window) {
 	//  - Vertical
 	if(glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS) // Up
 		Position += Up * speed;
-	if(glfwGetKey(window, GLFW_KEY_LEFT_CONTROL) == GLFW_PRESS) // Down
+	if(glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS) // Down
 		Position += -Up * speed;
 
 	/* Just dont.
