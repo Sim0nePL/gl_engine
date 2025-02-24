@@ -5,10 +5,7 @@
 
 #include "classes/Camera.h"
 #include "classes/Shader.h"
-
-#include "classes/Buffers/VAO.h"
-#include "classes/Buffers/VBO.h"
-#include "classes/Buffers/EBO.h"
+#include "classes/Buffers.h"
 
 int main (int argc, char *argv[]) {
 	std::cout << "OpenGL Template !float" << std::endl;
