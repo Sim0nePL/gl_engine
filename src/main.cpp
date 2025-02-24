@@ -71,9 +71,25 @@ int main (int argc, char *argv[]) {
 	// Camera
 	Camera camera(screenWidth, screenWidth, { 0.0f, 0.0f, 2.0f} );
 
+	bool isPressed = false;
+
 	/* Loop until the user closes the window */
 	while (!glfwWindowShouldClose(window))
 	{
+		// Shader Hotreload
+		if(glfwGetKey(window, GLFW_KEY_R) == GLFW_PRESS) {
+			if(!isPressed) {
+				std::cout << "Pressed" << std::endl;
+				shader.Unbind();
+				shader.Delete();
+				shader = Shader("./src/shaders/shader.vert", "./src/shaders/shader.frag");
+				shader.Bind();
+
+				isPressed = true;
+			}
+		} else isPressed = false;
+
+
 		camera.Inputs(window);
 
 		// Render here
