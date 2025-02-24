@@ -75,7 +75,7 @@ int main (int argc, char *argv[]) {
 	shader.Bind();
 
 	// Camera
-	Camera camera(screenWidth, screenWidth, { 0.0f, 0.0f, 2.0f} );
+	Camera camera(screenWidth, screenHeight, { 0.0f, 0.0f, 2.0f} );
 
 	bool isPressed = false;
 
