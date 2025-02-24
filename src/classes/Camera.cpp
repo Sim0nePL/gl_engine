@@ -38,6 +38,12 @@ void Camera::Inputs(GLFWwindow* window) {
 	if(glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS) // Down
 		Position += -Up * speed;
 
+	if(glfwGetKey(window, GLFW_KEY_BACKSPACE) == GLFW_PRESS) {
+		Position = { 0.0f, 0.0f, 2.0f };
+		Orientation = { 0.0f, 0.0f, -1.0f };
+		Up = { 0.0f, 1.0f, 0.0f };
+	}
+
 	/* Just dont.
 	if(glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS) // Right
 		Up = glm::rotate(Up, glm::radians(1.0f), Orientation);
