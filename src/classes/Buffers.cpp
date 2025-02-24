@@ -60,6 +60,7 @@ VAO::~VAO() {
 //  EBO
 EBO::EBO() {
 	glGenBuffers(1, &id);
+	std::cout << "DEBUG: EBO " << id << " -> " << "Created" << std::endl;
 }
 
 void EBO::Bind() {

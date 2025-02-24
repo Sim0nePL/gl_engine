@@ -6,8 +6,20 @@
 
 #include "classes/Camera.h"
 #include "classes/Shader.h"
-#include "classes/Buffers.h"
 #include "classes/Vertex.h"
+#include "classes/Mesh.h"
+
+// ---------------------------------------------------------
+//
+//		TODO: 
+//			- Abstract Window Class so delete 
+//					functions could be in deconstructors
+//					after that glfwTerminate() will be called.
+//			- Renderer.
+//			- Some prefabs class based on Mesh.
+//
+//
+// ---------------------------------------------------------
 
 int main (int argc, char *argv[]) {
 	std::cout << "OpenGL Template !float" << std::endl;
@@ -53,22 +65,8 @@ int main (int argc, char *argv[]) {
 	};
 
 	// Buffers
-	VBO vbo;
-	vbo.Bind();
-	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-
-	VAO vao;
-	vao.Bind();
-	glVertexAttribPointer(0, 3, GL_FLOAT, false, sizeof(Vertex), 0); // Positions
-	glEnableVertexAttribArray(0);
-
-	glVertexAttribPointer(1, 4, GL_FLOAT, false, sizeof(Vertex), (void*) offsetof(Vertex, color)); // Color
-	glEnableVertexAttribArray(1);
-
-	EBO ebo;
-	ebo.Bind();
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
-
+	Mesh plane(vertices, sizeof(vertices), indices, sizeof(indices));
+	plane.Bind();
 
 	// Shader
 	Shader shader("./src/shaders/shader.vert", "./src/shaders/shader.frag");
@@ -111,17 +109,7 @@ int main (int argc, char *argv[]) {
 		glfwPollEvents();
 	}
 
-	shader.Unbind();
-	shader.Delete();
-	
-	ebo.Unbind();
-	ebo.Delete();
-
-	vbo.Unbind();
-	vbo.Delete();
-
-	vao.Unbind();
-	vao.Delete();
+	plane.Delete();
 
 	glfwTerminate();
 
