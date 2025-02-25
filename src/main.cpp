@@ -1,8 +1,11 @@
-#include <cstddef>
 #include <iostream>
 
 #include <glad/gl.h>
 #include <GLFW/glfw3.h>
+
+#include "imgui.h"
+#include "backends/imgui_impl_opengl3.h"
+#include "backends/imgui_impl_glfw.h"
 
 #include "classes/Camera.h"
 #include "classes/Renderer.h"
@@ -21,7 +24,14 @@
 //					functions could be in deconstructors
 //					after that glfwTerminate() will be called.
 //			- Some prefabs class based on Mesh.
-//
+//			- FPS counter. -> imgui says hello
+//			- Some textures						|
+//																|
+//					Future plans:				  ⌄
+//			-	Try to add GUI with power of creation things.
+//			- Hot Reloading
+//			- Input Handling system
+//			- DSA would be cool
 //
 // ------------------------------------------------------------
 
@@ -80,6 +90,15 @@ int main (int argc, char *argv[]) {
 
 	bool isPressed = false;
 
+	IMGUI_CHECKVERSION();
+	ImGui::CreateContext();
+	ImGuiIO& io = ImGui::GetIO(); (void)io;
+	ImGui::StyleColorsDark();
+	ImGui_ImplGlfw_InitForOpenGL(window, true);
+	ImGui_ImplOpenGL3_Init("#version 330");
+
+	bool bDraw = true;
+
 	/* Loop until the user closes the window */
 	while (!glfwWindowShouldClose(window))
 	{
@@ -101,9 +120,23 @@ int main (int argc, char *argv[]) {
 
 		// Render here
 		glClear(GL_COLOR_BUFFER_BIT);
+
+		ImGui_ImplOpenGL3_NewFrame();
+		ImGui_ImplGlfw_NewFrame();
+		ImGui::NewFrame();
+
 		camera.Matrix(shader, "Matrix");
 	
-		Renderer::Render(plane);
+		if(bDraw)
+			Renderer::Render(plane);
+
+		ImGui::Begin("Jebac ci starego");
+		ImGui::Text("i starom");
+		ImGui::Checkbox("Draw Triangle", &bDraw);
+		ImGui::End();
+
+		ImGui::Render();
+		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
 		// Swap front and back buffers
 		glfwSwapBuffers(window);
@@ -111,6 +144,10 @@ int main (int argc, char *argv[]) {
 		// Poll for and process events
 		glfwPollEvents();
 	}
+
+	ImGui_ImplOpenGL3_Shutdown();
+	ImGui_ImplGlfw_Shutdown();
+	ImGui::DestroyContext();
 
 	plane.Delete();
 

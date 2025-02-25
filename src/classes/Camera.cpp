@@ -52,6 +52,7 @@ void Camera::Inputs(GLFWwindow* window) {
 	*/
 
 	// Mouse
+	/*
 	if(glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_1) == GLFW_PRESS) {
 		glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
@@ -69,6 +70,7 @@ void Camera::Inputs(GLFWwindow* window) {
 			glfwSetCursorPos(window, (int) (width / 2), (int) (height / 2));
 		}
 	} else glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+	*/
 }
 
 Camera::~Camera() {
